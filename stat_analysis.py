@@ -42,6 +42,8 @@ print(f"--- DATA CLEANING ---")
 print(f"Original 10-year data points: {len(df_recent)}")
 print(f"Data points after removing 'black swan' outliers: {len(df_clean)}\n")
 
+df_clean.to_csv('cleaned_oil_sp500_data.csv', index=False)
+
 # ==========================================
 # Phase 3: Exploratory Data Analysis (EDA)
 # ==========================================
