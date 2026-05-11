@@ -93,3 +93,52 @@ print("Confusion Matrix:")
 print(confusion_matrix(Y_log, Y_pred))
 print("\nClassification Report:")
 print(classification_report(Y_log, Y_pred))
+
+# ==========================================
+# Phase 5: Additional Data Visualizations
+# ==========================================
+
+# --- FIGURE 4: Visual Confusion Matrix ---
+# Generate the matrix values
+cm = confusion_matrix(Y_log, Y_pred)
+
+plt.figure(figsize=(7, 5))
+# Use seaborn heatmap to make it visual. 'fmt="d"' ensures whole numbers.
+sns.heatmap(cm, annot=True, fmt='d', cmap='Reds', cbar=False,
+            xticklabels=['Predicted Down', 'Predicted Up'],
+            yticklabels=['Actual Down', 'Actual Up'],
+            annot_kws={"size": 16}) # Make the numbers nice and big
+
+plt.title('Logistic Regression: Market Direction Confusion Matrix', fontsize=14, pad=15)
+plt.ylabel('True Market Movement', fontsize=12)
+plt.xlabel('Predicted Market Movement', fontsize=12)
+
+# This text box helps explain the visual to the reader
+plt.figtext(0.5, -0.05, "Note: Model failed to predict any market downturns (0 True Negatives).", 
+            wrap=True, horizontalalignment='center', fontsize=10, color='darkred')
+plt.show()
+
+
+# --- FIGURE 3: Explained Variance Pie Chart (R-Squared) ---
+r_squared = ols_model.rsquared * 100
+unexplained = 100 - r_squared
+
+sizes = [r_squared, unexplained]
+colors = ['#ff9999', '#66b3ff']
+explode = (0.2, 0)
+
+plt.figure(figsize=(7, 6))
+
+wedges, texts, autotexts = plt.pie(sizes, explode=explode, colors=colors, autopct='%1.1f%%',
+                                   shadow=True, startangle=90, textprops={'fontsize': 12})
+
+# Add a legend to the side instead of overlapping labels
+plt.legend(wedges, 
+           [f'Explained by Oil ({r_squared:.1f}%)', f'Unexplained ({unexplained:.1f}%)'],
+           title="Variance Breakdown",
+           loc="center left",
+           bbox_to_anchor=(1, 0.5))
+
+plt.title('S&P 500 Variance Explained by WTI Crude Oil', fontsize=14)
+plt.tight_layout()
+plt.show()
