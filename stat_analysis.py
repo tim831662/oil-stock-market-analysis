@@ -50,7 +50,7 @@ df_clean.to_csv('cleaned_oil_sp500_data.csv', index=False)
 # 1. Scatter Plot
 plt.figure(figsize=(10, 6))
 sns.scatterplot(x='WTI_Return', y='SP500_Return', data=df_clean, alpha=0.7, color='blue')
-plt.title('Monthly Returns (Last 10 Years): WTI Crude Oil vs S&P 500')
+plt.title('Monthly Returns (2004-2013): WTI Crude Oil vs S&P 500')
 plt.xlabel('WTI Crude Monthly Return')
 plt.ylabel('S&P 500 Monthly Return')
 plt.axhline(0, color='black', linestyle='--', linewidth=0.8)
@@ -85,7 +85,7 @@ ax2.plot(df_clean['Date'], df_clean['SP500_Return'], color='steelblue',
          linewidth=1.2, alpha=0.8, label='S&P 500')
 ax2.tick_params(axis='y', labelcolor='steelblue')
 
-fig.suptitle('WTI Crude Oil vs S&P 500: Monthly Returns (2013–2023)', fontsize=14)
+fig.suptitle('WTI Crude Oil vs S&P 500: Monthly Returns (2004–2013)', fontsize=14)
 fig.legend(loc='upper left', bbox_to_anchor=(0.1, 0.88))
 plt.tight_layout()
 plt.show()
