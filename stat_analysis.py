@@ -68,6 +68,28 @@ sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
 plt.title('Pearson Correlation Heatmap')
 plt.show()
 
+
+# 3. Time Series Plot of Monthly Returns
+fig, ax1 = plt.subplots(figsize=(12, 6))
+
+ax1.set_xlabel('Date')
+ax1.set_ylabel('WTI Monthly Return', color='tab:orange')
+ax1.plot(df_clean['Date'], df_clean['WTI_Return'], color='tab:orange', 
+         linewidth=1.2, alpha=0.8, label='WTI Crude Oil')
+ax1.tick_params(axis='y', labelcolor='tab:orange')
+ax1.axhline(0, color='black', linestyle='--', linewidth=0.6)
+
+ax2 = ax1.twinx()
+ax2.set_ylabel('S&P 500 Monthly Return', color='steelblue')
+ax2.plot(df_clean['Date'], df_clean['SP500_Return'], color='steelblue', 
+         linewidth=1.2, alpha=0.8, label='S&P 500')
+ax2.tick_params(axis='y', labelcolor='steelblue')
+
+fig.suptitle('WTI Crude Oil vs S&P 500: Monthly Returns (2013–2023)', fontsize=14)
+fig.legend(loc='upper left', bbox_to_anchor=(0.1, 0.88))
+plt.tight_layout()
+plt.show()
+
 # ==========================================
 # Phase 4: Statistical Modeling
 # ==========================================
@@ -118,29 +140,4 @@ plt.xlabel('Predicted Market Movement', fontsize=12)
 # This text box helps explain the visual to the reader
 plt.figtext(0.5, -0.05, "Note: Model failed to predict any market downturns (0 True Negatives).", 
             wrap=True, horizontalalignment='center', fontsize=10, color='darkred')
-plt.show()
-
-
-# --- FIGURE 3: Explained Variance Pie Chart (R-Squared) ---
-r_squared = ols_model.rsquared * 100
-unexplained = 100 - r_squared
-
-sizes = [r_squared, unexplained]
-colors = ['#ff9999', '#66b3ff']
-explode = (0.2, 0)
-
-plt.figure(figsize=(7, 6))
-
-wedges, texts, autotexts = plt.pie(sizes, explode=explode, colors=colors, autopct='%1.1f%%',
-                                   shadow=True, startangle=90, textprops={'fontsize': 12})
-
-# Add a legend to the side instead of overlapping labels
-plt.legend(wedges, 
-           [f'Explained by Oil ({r_squared:.1f}%)', f'Unexplained ({unexplained:.1f}%)'],
-           title="Variance Breakdown",
-           loc="center left",
-           bbox_to_anchor=(1, 0.5))
-
-plt.title('S&P 500 Variance Explained by WTI Crude Oil', fontsize=14)
-plt.tight_layout()
 plt.show()
